@@ -21,20 +21,20 @@
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString Message ${LANG_ENGLISH} "Installation complete. Run bong wallpaper plus?"
+LangString Message ${LANG_ENGLISH} "Installation complete. Run bang wallpaper plus?"
 LangString Message ${LANG_GERMAN} "Fertig. Bong Wallpaper Plus ausführen?"
 
 Function .onInit
 FunctionEnd
 
 ; The name of the installer
-Name "bong wallpaper plus"
+Name "bang wallpaper plus"
 
 ; The file to write
-OutFile bong.exe
+OutFile bang.exe
 
 ; The default installation directory
-InstallDir $DESKTOP\bong
+InstallDir $DESKTOP\bang
 
 ; Icon
 Icon parrot.ico
@@ -90,7 +90,7 @@ Section "" ;No components page, name is not important
   File powershell_change_background.ps1
   File rotanconv2.ps1
   File parrot.ico
-  CreateShortcut $SMPROGRAMS\Startup\bong.lnk $INSTDIR\bingwallpaper31.vbs "" $INSTDIR\parrot.ico 0
+  CreateShortcut $SMPROGRAMS\Startup\bang.lnk $INSTDIR\bingwallpaper31.vbs "" $INSTDIR\parrot.ico 0
   ; ReadRegStr $0  HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy"
   ; ${StrCase} $1 $0 "L"
   ; MessageBox MB_YESNO|MB_ICONEXCLAMATION $1
@@ -104,7 +104,7 @@ SectionEnd ; end the section
 
 Function .onInstSuccess
     MessageBox MB_YESNO "$(Message)" IDNO NoRun
-	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bingwallpaper31.vbs"' ; run bong
+	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bingwallpaper31.vbs"' ; run bang
 	Sleep 3000
     NoRun:
 FunctionEnd
@@ -112,7 +112,7 @@ FunctionEnd
 Section "Uninstall"
   ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
   ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
-  Delete $SMPROGRAMS\Startup\bong.lnk
+  Delete $SMPROGRAMS\Startup\bang.lnk
   Delete $INSTDIR\bingwallpaper31.vbs
   Delete $INSTDIR\dumpproxy.ps1
   Delete $INSTDIR\powershell_change_background.ps1
