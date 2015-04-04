@@ -12,3 +12,5 @@ Bang Wallpaper Plus features
 - No dependencies on external libraries
 - Tested on Windows 7 and on Windows 8.1
 
+![][bingimage]
+[bingimage]: http://download-codeplex.sec.s-msft.com/Download?ProjectName=bang&DownloadId=1436017
