@@ -13,7 +13,7 @@ Param(
 # }
 
 
-$Title = Get-Content -Path ".\desc.txt" | Out-String
+# Title = Get-Content -Path ".\desc.txt" | Out-String
 
 Write-Verbose "Load System.Drawing"
 [Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
