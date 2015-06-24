@@ -34,7 +34,7 @@ Name "Bang Wallpaper Plus"
 OutFile bang.exe
 
 ; The default installation directory
-InstallDir $DESKTOP\bang
+InstallDir "$DESKTOP\Bang Wallpaper Plus"
 
 ; Icon
 Icon parrot.ico
@@ -85,12 +85,12 @@ Section "" ;No components page, name is not important
   WriteUninstaller "uninstall.exe"
   
   ; Put file there
-  File bingwallpaper33.vbs
+  File bangwallpaper35.vbs
   File dumpproxy.ps1
-  File powershell_change_background.ps1
-  File rotanconv2.ps1
+  File rotanconv3.ps1
   File parrot.ico
-  CreateShortcut $SMPROGRAMS\Startup\bang.lnk $INSTDIR\bingwallpaper33.vbs "" $INSTDIR\parrot.ico 0
+  File README.txt
+  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper35.vbs "" $INSTDIR\parrot.ico 0
   ; ReadRegStr $0  HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy"
   ; ${StrCase} $1 $0 "L"
   ; MessageBox MB_YESNO|MB_ICONEXCLAMATION $1
@@ -99,12 +99,12 @@ Section "" ;No components page, name is not important
   ; MessageBox MB_YESNO|MB_ICONEXCLAMATION "fix registry now"
   ; WriteRegStr HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy" "Remotesigned"
   ; goahead:
-  	  ; everything alright
+  ; everything alright
 SectionEnd ; end the section
 
 Function .onInstSuccess
     MessageBox MB_YESNO "$(Message)" IDNO NoRun
-	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bingwallpaper33.vbs"' ; run bang
+	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper35.vbs"' ; run bang
 	Sleep 3000
     NoRun:
 FunctionEnd
@@ -113,10 +113,9 @@ Section "Uninstall"
   ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
   ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
   Delete $SMPROGRAMS\Startup\bang.lnk
-  Delete $INSTDIR\bingwallpaper33.vbs
+  Delete $INSTDIR\bangwallpaper35.vbs
   Delete $INSTDIR\dumpproxy.ps1
-  Delete $INSTDIR\powershell_change_background.ps1
-  Delete $INSTDIR\rotanconv2.ps1
+  Delete $INSTDIR\rotanconv3.ps1
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\desc.txt
   Delete $INSTDIR\dumpproxy.txt
@@ -124,6 +123,7 @@ Section "Uninstall"
   Delete $INSTDIR\bingimage.jpg
   Delete $INSTDIR\bingimagean.bmp
   Delete $INSTDIR\uninstall.exe
+  Delete $INSTDIR\README.txt
   RMDir $INSTDIR
 SectionEnd
 
