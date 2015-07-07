@@ -112,7 +112,7 @@ FunctionEnd
 Section "Uninstall"
   ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
   ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
-  Delete $SMPROGRAMS\Startup\bang.lnk
+  Delete "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk"
   Delete $INSTDIR\bangwallpaper35.vbs
   Delete $INSTDIR\dumpproxy.ps1
   Delete $INSTDIR\rotanconv3.ps1
