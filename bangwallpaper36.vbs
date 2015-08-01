@@ -133,18 +133,10 @@ desc=Replace(desc,"&#240;","ð")
 desc=Replace(desc,"&#246;","ö")
 desc=Replace(desc,"&#252;","ü")
 desc=Replace(desc,"&amp;","&")
-
-REM set imgpath
-REM pwd=WshShell.CurrentDirectory
-REM imgpath = pwd + "\bingimagean.bmp"
-REM Set filesys = CreateObject("Scripting.FileSystemObject")
-REM Set filetxt = filesys.OpenTextFile("pwd.txt", 2, True) 
-REM filetxt.Write imgpath
-REM filetxt.Close 
+desc=Replace(desc,"’","specialtickcharacter") ' works
 
 pos1=Instr(H,"g_img={url:'")
 pos2=Instr(pos1, H,".jpg")
-
 
 url=Mid(H,pos1+12, pos2-pos1-8)
 
@@ -189,7 +181,7 @@ Set filetxt = filesys.OpenTextFile("bingimage.jpg", 2, True)
 filetxt.Write H
 filetxt.Close 
 
-WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv3.ps1 {" + desc + "}", 0, TRUE
+WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv4.ps1 {" + desc + "}", 0, TRUE
 REM WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\powershell_change_background.ps1", 0, TRUE
 REM WshShell.Run "powershell.exe -nologo -command .\powershell_change_background.ps1", 0, TRUE
 

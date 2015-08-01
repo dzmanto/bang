@@ -78,6 +78,7 @@ $Image.SmoothingMode = "AntiAlias"
 $Rectangle = New-Object Drawing.Rectangle 0, 0, $srcImg.Width, $srcImg.Height
 $Image.DrawImage($srcImg, $Rectangle, 0, 0, $srcImg.Width, $srcImg.Height, ([Drawing.GraphicsUnit]::Pixel))
 
+$Title=$Title -replace "specialtickcharacter", "'"
 Write-Verbose "Draw title: $Title"
 $Font = new-object System.Drawing.Font("Arial", 11)
 $Brush = new-Object Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 255, 255, 255))
