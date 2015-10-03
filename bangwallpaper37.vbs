@@ -134,6 +134,7 @@ desc=Replace(desc,"&#246;","ö")
 desc=Replace(desc,"&#252;","ü")
 desc=Replace(desc,"&amp;","&")
 desc=Replace(desc,"’","specialtickcharacter") ' works
+desc=Replace(desc,"'","tickcharacter") ' works
 
 pos1=Instr(H,"g_img={url:'")
 pos2=Instr(pos1, H,".jpg")
@@ -181,14 +182,7 @@ Set filetxt = filesys.OpenTextFile("bingimage.jpg", 2, True)
 filetxt.Write H
 filetxt.Close 
 
-WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv4.ps1 {" + desc + "}", 0, TRUE
-REM WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\powershell_change_background.ps1", 0, TRUE
-REM WshShell.Run "powershell.exe -nologo -command .\powershell_change_background.ps1", 0, TRUE
-
-REM pwd=WshShell.CurrentDirectory
-REM imgpath = pwd + "\bingimgean.bmp"
-REM WshShell.RegWrite "HKCU\Control Panel\Desktop\Wallpaper", imgpath
-
+WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv5.ps1 {" + desc + "}", 0, TRUE
 
 set WshShell = nothing
 set objHTTP = nothing
