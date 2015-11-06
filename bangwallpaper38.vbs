@@ -104,14 +104,21 @@ end if
 
 pos0=Instr(H,"""hpcNext""></div></div></a><a href")
 pos1=Instr(pos0,H,"title=")
-pos2=Instr(pos1, H,"hpcCopyInfo")
-desc=Mid(H,pos1+7, pos2-pos1-59)
+pos2=Instr(pos1+8, H,"""")
+desc=Mid(H,pos1+5, pos2-pos1-85)
+
 if Len(Trim(desc))=0 or pos1<100 then
 	pos0=Instr(H,"""hpcNext""></div></div></a><a href")
 	pos1=Instr(pos0,H,"alt=")
-	pos2=Instr(pos1, H,"hpcCopyInfo")
-	desc=Mid(H,pos1+5, pos2-pos1-85)
+	pos2=Instr(pos1+5, H,"""")
+	desc=Mid(H,pos1+5, pos2-pos1-5)
 end if
+
+REM write descriptor to file for analysis
+Set filesys = CreateObject("Scripting.FileSystemObject")
+Set filetxt = filesys.OpenTextFile("desc.txt", 2, True) 
+filetxt.Write desc
+filetxt.Close
 
 desc=Replace(desc,"&#128;","€")
 desc=Replace(desc,"&#147;","“")
@@ -133,8 +140,9 @@ desc=Replace(desc,"&#240;","ð")
 desc=Replace(desc,"&#246;","ö")
 desc=Replace(desc,"&#252;","ü")
 desc=Replace(desc,"&amp;","&")
-desc=Replace(desc,"’","specialtickcharacter") ' works
-desc=Replace(desc,"'","tickcharacter") ' works
+desc=Replace(desc,"’","specialtickcharacter") REM works
+desc=Replace(desc,"'","tickcharacter") REM works
+
 
 pos1=Instr(H,"g_img={url:'")
 pos2=Instr(pos1, H,".jpg")
