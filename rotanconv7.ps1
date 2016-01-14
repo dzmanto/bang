@@ -3,6 +3,9 @@
 
 Param(
   [Parameter(Mandatory=$False,Position=1)]
+  [string]$imgurl,
+  
+  [Parameter(Mandatory=$False,Position=2)]
   [string]$Title
 )
 
@@ -57,6 +60,9 @@ namespace Wallpaper
 }
 "@
 
+$wc = New-Object Net.WebClient
+$wc.DownloadFile($imgurl, ".\bingimage.jpg")
+
 Write-Verbose "Load System.Drawing"
 [Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
 
@@ -78,7 +84,8 @@ $Image.SmoothingMode = "AntiAlias"
 $Rectangle = New-Object Drawing.Rectangle 0, 0, $srcImg.Width, $srcImg.Height
 $Image.DrawImage($srcImg, $Rectangle, 0, 0, $srcImg.Width, $srcImg.Height, ([Drawing.GraphicsUnit]::Pixel))
 
-$Title=$Title -replace "specialtickcharacter", "'"
+$Title=$Title -replace "singletickstart", "‘"
+$Title=$Title -replace "singletickstop", "’"
 $Title=$Title -replace "tickcharacter", "'"
 Write-Verbose "Draw title: $Title"
 $Font = new-object System.Drawing.Font("Arial", 11)

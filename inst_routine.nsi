@@ -85,12 +85,12 @@ Section "" ;No components page, name is not important
   WriteUninstaller "uninstall.exe"
   
   ; Put file there
-  File bangwallpaper38.vbs
+  File bangwallpaper40.vbs
   File dumpproxy.ps1
-  File rotanconv5.ps1
+  File rotanconv7.ps1
   File parrot.ico
   File README.txt
-  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper38.vbs "" $INSTDIR\parrot.ico 0
+  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper40.vbs "" $INSTDIR\parrot.ico 0
   ; ReadRegStr $0  HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy"
   ; ${StrCase} $1 $0 "L"
   ; MessageBox MB_YESNO|MB_ICONEXCLAMATION $1
@@ -104,7 +104,7 @@ SectionEnd ; end the section
 
 Function .onInstSuccess
     MessageBox MB_YESNO "$(Message)" IDNO NoRun
-	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper38.vbs"' ; run bang
+	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper40.vbs"' ; run bang
 	Sleep 3000
     NoRun:
 FunctionEnd
@@ -113,9 +113,9 @@ Section "Uninstall"
   ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
   ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
   Delete "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk"
-  Delete $INSTDIR\bangwallpaper38.vbs
+  Delete $INSTDIR\bangwallpaper40.vbs
   Delete $INSTDIR\dumpproxy.ps1
-  Delete $INSTDIR\rotanconv5.ps1
+  Delete $INSTDIR\rotanconv7.ps1
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\desc.txt
   Delete $INSTDIR\dumpproxy.txt

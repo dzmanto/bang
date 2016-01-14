@@ -140,7 +140,8 @@ desc=Replace(desc,"&#240;","ð")
 desc=Replace(desc,"&#246;","ö")
 desc=Replace(desc,"&#252;","ü")
 desc=Replace(desc,"&amp;","&")
-desc=Replace(desc,"’","specialtickcharacter") REM works
+desc=Replace(desc,"‘","singletickstart") REM works
+desc=Replace(desc,"’","singletickstop") REM works
 desc=Replace(desc,"'","tickcharacter") REM works
 
 
@@ -162,35 +163,7 @@ end if
 
 url = "http://www.bing.com" + url
 
-REM Download the bing image from the url
-objHTTP.Open "GET", url, False
-On Error Resume Next
-objHTTP.Send
-If Err.Number <> 0 Then
-	errout = "failed to download bing image from the url " + url + ". Error number " + CStr(Err.Number) + "."
-	writelog(errout)
-	set filesys = nothing
-	set filetxt = nothing
-	set objStream = nothing
-	set objHTTP = nothing
-	set objFile = nothing
-	set WshShell = nothing
-  	Wscript.Quit
-End If
-	
-REM Write the downloaded byte stream to the target file
-H=""
-For i = 1 To LenB( objHTTP.ResponseBody )
-    H = H + Chr( AscB( MidB( objHTTP.ResponseBody, i, 1 ) ) )
-Next
-objHTTP.Disconnect
-
-Set filesys = CreateObject("Scripting.FileSystemObject")
-Set filetxt = filesys.OpenTextFile("bingimage.jpg", 2, True) 
-filetxt.Write H
-filetxt.Close 
-
-WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv5.ps1 {" + desc + "}", 0, TRUE
+WshShell.Run "powershell.exe -nologo -ExecutionPolicy Bypass -command .\rotanconv7.ps1 {" + url + "} {" + desc + "}", 0, TRUE
 
 set WshShell = nothing
 set objHTTP = nothing
