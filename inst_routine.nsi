@@ -86,15 +86,7 @@ Section "" ;No components page, name is not important
   
   ; Put file there
   File bangwallpaper42.vbs
-<<<<<<< HEAD
-<<<<<<< HEAD
   File rotanconv11.ps1
-=======
-  File rotanconv10.ps1
->>>>>>> 6ea00f104a35aecfc0818595b2bd23596e311fb7
-=======
-  File rotanconv10.ps1
->>>>>>> 6ea00f104a35aecfc0818595b2bd23596e311fb7
   File parrot.ico
   File README.txt
   CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
@@ -123,13 +115,7 @@ Section "Uninstall"
   Delete $INSTDIR\bangwallpaper42.vbs
   Delete $INSTDIR\bangwallpaper40.vbs
   Delete $INSTDIR\dumpproxy.ps1
-<<<<<<< HEAD
-<<<<<<< HEAD
   Delete $INSTDIR\rotanconv11.ps1
-=======
->>>>>>> 6ea00f104a35aecfc0818595b2bd23596e311fb7
-=======
->>>>>>> 6ea00f104a35aecfc0818595b2bd23596e311fb7
   Delete $INSTDIR\rotanconv10.ps1
   Delete $INSTDIR\rotanconv7.ps1
   Delete $INSTDIR\parrot.ico
