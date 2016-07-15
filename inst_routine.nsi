@@ -19,10 +19,12 @@
 ; !insertmacro MUI_PAGE_COMPONENTS
 
 !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "French"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString Message ${LANG_ENGLISH} "Installation complete. Run Bang Wallpaper Plus?"
-LangString Message ${LANG_GERMAN} "Fertig. Bang Wallpaper Plus ausführen?"
+LangString Message ${LANG_ENGLISH} "Installation complete. Run Bang Wallpaper Plus now?"
+LangString Message ${LANG_ENGLISH} "Installation complète. Veuillez exécuter Bang Wallpaper Plus maintenant?"
+LangString Message ${LANG_GERMAN} "Fertig. Bang Wallpaper Plus jetzt ausführen?"
 
 Function .onInit
 FunctionEnd
@@ -86,7 +88,8 @@ Section "" ;No components page, name is not important
   
   ; Put file there
   File bangwallpaper42.vbs
-  File rotanconv10.ps1
+  File rotanconv16.ps1
+  File hostinfo
   File parrot.ico
   File README.txt
   CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
@@ -115,10 +118,14 @@ Section "Uninstall"
   Delete $INSTDIR\bangwallpaper42.vbs
   Delete $INSTDIR\bangwallpaper40.vbs
   Delete $INSTDIR\dumpproxy.ps1
+  Delete $INSTDIR\rotanconv16.ps1
+  Delete $INSTDIR\rotanconv11.ps1
   Delete $INSTDIR\rotanconv10.ps1
   Delete $INSTDIR\rotanconv7.ps1
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\desc.txt
+  Delete $INSTDIR\hostinfo 
+  Delete $INSTDIR\heise
   Delete $INSTDIR\log.txt
   Delete $INSTDIR\dumpproxy.txt
   Delete $INSTDIR\hostinfo
