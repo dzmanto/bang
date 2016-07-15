@@ -69,9 +69,13 @@ if($contents.length -eq 0) {
 }
 
 Write-Verbose "Parse http://www.bing.com"
-$b = $contents.indexof("g_img={url:'")
+$b = $contents.indexof("g_img={url:")
 $c = $contents.substring($b+12).indexof(".jpg")
 $imgurl = $contents.substring($b+12,$c+4)
+$imgurl = $imgurl -replace """" , ""
+$imgurl = $imgurl -replace "\\/" , "/"
+$imgurl =$imgurl -replace "'", ""
+$imgurl = $imgurl.Trim()
 $imgurl = "http://www.bing.com" + $imgurl
 $d = $contents.indexof("hpcNext""></div></div></a><a href")
 $contents = $contents.substring($d)
