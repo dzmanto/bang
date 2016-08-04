@@ -159,6 +159,7 @@ if (-Not (Test-Path $strFileName)) {
 $contents = cutidx $contents "alt="""
 $e = $contents.substring(5).indexof("""")
 $Title = $contents.substring(5,$e)
+$Title = $Title -replace "&amp;" , "&"
 
 Write-Verbose "Load System.Drawing."
 [Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
