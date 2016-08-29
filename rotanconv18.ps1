@@ -107,15 +107,53 @@ function procstr {
 	return $strtoproc
 }
 
-$strFileName = ".\heise"
-if (Test-Path $strFileName) {
+function proctitle {
+	Param(
+		[Parameter(Mandatory=$True,Position=1)]
+		[string]$strtoproc 
+	)
+	$strtoproc = $strtoproc -replace "&amp;" , "&"
+	$strtoproc = $strtoproc -replace "&quot;" , [char]34
+	$strtoproc = $strtoproc -replace "&lt;" , "<"
+	$strtoproc = $strtoproc -replace "&gt;" , ">"
+	$strtoproc = $strtoproc -replace "&gt;" , ">"
+	$strtoproc = $strtoproc -replace "&tilde;" , "˜"
+	$strtoproc = $strtoproc -replace "&circ;" , "^"
+	$strtoproc = $strtoproc -replace "&ndash;" , "–"
+	$strtoproc = $strtoproc -replace "&mdash;" , "—"
+	$strtoproc = $strtoproc -replace "&permil;" , "‰"
+	$strtoproc = $strtoproc.trim()
+	return $strtoproc
+}
+
+function resizeimg {
+	Param(
+		[Parameter(Mandatory=$True,Position=1)]
+		[string]$rwidth, 
+		
+		[Parameter(Mandatory=$True,Position=2)]
+		[string]$rheight,
+		
+		[Parameter(Mandatory=$True,Position=3)]
+		[System.Drawing.Bitmap]$bmpFile
+	)
+	#create resized bitmap
+	$bmpResized = New-Object System.Drawing.Bitmap([int] ($rwidth), [int] ($rheight))
+	$graph = [System.Drawing.Graphics]::FromImage($bmpResized)
+	$graph.Clear([System.Drawing.Color]::White)
+	$graph.DrawImage($bmpFile,0, 0, $rwidth, $rheight)
+	return $bmpResized
+}
+
+$heisestrFileName = ".\heise"
+if (Test-Path $heisestrFileName) {
 	$contents = goget "http://www.heise.de/foto/galerie/"
 } else {
 	$contents = goget "http://www.bing.com/"
 }
 
 Write-Verbose "Parse target website"
-if (Test-Path $strFileName) {
+if (Test-Path $heisestrFileName) {
 	$contents = cutidx $contents "figure class=""main_stage"""
 	$contents = cutidx $contents "<a href="""
 	$dh = $contents.indexof("/"">")
@@ -147,7 +185,7 @@ try {
 }
 $memoryStream = New-Object System.IO.MemoryStream(,$imgarray)
 
-if (-Not (Test-Path $strFileName)) {
+if (-Not (Test-Path $heisestrFileName)) {
 	$contentstemp = cutidx $contents "hpcNext""></div></div></a><a href"
 	if($contents.compareto($contentstemp) -eq 0) {
 		$contents = cutidx $contents "hpcNext""></div></div></a><a"
@@ -159,7 +197,7 @@ if (-Not (Test-Path $strFileName)) {
 $contents = cutidx $contents "alt="""
 $e = $contents.substring(5).indexof("""")
 $Title = $contents.substring(5,$e)
-$Title = $Title -replace "&amp;" , "&"
+$Title = proctitle $Title
 
 Write-Verbose "Load System.Drawing."
 [Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
@@ -169,11 +207,38 @@ Write-Verbose "Source image from memorystream."
 $srcImg = [System.Drawing.Bitmap][System.Drawing.Image]::FromStream($memoryStream)
 $memoryStream.Dispose()
 
+$rheight=$srcImg.Height
+$rwidth=$srcImg.Width
+# Resize image if necessary
+$CurrentRes = (Get-WmiObject -Class Win32_VideoController).VideoModeDescription;
+if(($CurrentRes.Trim()).Contains("800 x 600")) {
+	$rheight=600
+	$rwidth=800
+} elseif(($CurrentRes.Trim()).Contains("1024 x 768")) {
+	$rheight=768
+	$rwidth=1024
+} elseif(($CurrentRes.Trim()).Contains("1280 x 800")) {
+	$rheight=800
+	$rwidth=1280
+} elseif(($CurrentRes.Trim()).Contains("1440 x 900")) {
+	$rheight=900
+	$rwidth=1440
+} elseif(($CurrentRes.Trim()).Contains("1680 x 1050")) {
+	$rheight=1050
+	$rwidth=1680
+} elseif(($CurrentRes.Trim()).Contains("1920 x 1200")) {
+	$rheight=1200
+	$rwidth=1920
+}
+
+Write-Verbose "Resize image."
+$srcImg = resizeimg $rwidth $rheight $srcImg
+
 # rotate the image 
 $srcImg.rotateflip("Rotate270FlipNone")
 
 Write-Verbose "Create a bitmap object."
-$bmpFile = New-Object System.Drawing.Bitmap([int]($srcImg.width)),([int]($srcImg.height))
+$bmpFile = New-Object System.Drawing.Bitmap(([int]($srcImg.width)),([int]($srcImg.height)))
 
 Write-Verbose "Intialize graphics object."
 $Image = [System.Drawing.Graphics]::FromImage($bmpFile)
@@ -204,8 +269,8 @@ $Brush = New-Object Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 25
 $Image.DrawString($Title, $Font, $Brush, $srcImg.Width/2, $dist,$sFormat)
 
 # begin display host info
-$strFileName = ".\hostinfo"
-if (Test-Path $strFileName) {
+$heisestrFileName = ".\hostinfo"
+if (Test-Path $heisestrFileName) {
 	$bmpFile.rotateflip("Rotate180FlipNone")
 	$sFormatNew=New-Object System.Drawing.Stringformat("DirectionVertical")
         
@@ -269,7 +334,6 @@ $srcImg.Dispose()
 
 # begin setwallpaper
 Write-Verbose "Write registry."
-$value = "1"
 $registryPath = "HKCU:\Control Panel\Desktop"
 
 if(!(Test-Path $registryPath)) {
@@ -277,9 +341,11 @@ if(!(Test-Path $registryPath)) {
 }
 
 $nm = "WallpaperStyle"
-New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType DWORD -Force | Out-Null
+$value = "2"
+New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType STRING -Force | Out-Null
 $nm = "TileWallpaper"
-New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType DWORD -Force | Out-Null
+$value = "0"
+New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType STRING -Force | Out-Null
 
 Write-Verbose "Refresh explorer."
 [Wallpaper.Setter]::SetWallpaper($path)
