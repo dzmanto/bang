@@ -88,7 +88,7 @@ Section "" ;No components page, name is not important
   
   ; Put file there
   File bangwallpaper42.vbs
-  File rotanconv17.ps1
+  File rotanconv18.ps1
   File hostinfo
   File parrot.ico
   File README.txt
@@ -118,6 +118,7 @@ Section "Uninstall"
   Delete $INSTDIR\bangwallpaper42.vbs
   Delete $INSTDIR\bangwallpaper40.vbs
   Delete $INSTDIR\dumpproxy.ps1
+  Delete $INSTDIR\rotanconv18.ps1
   Delete $INSTDIR\rotanconv17.ps1
   Delete $INSTDIR\rotanconv16.ps1
   Delete $INSTDIR\rotanconv11.ps1
