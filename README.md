@@ -1,5 +1,5 @@
 #Project Bang Wallpaper Plus
-Bang Wallpaper Plus downloads the latest bing wallpaper automatically at startup. The download is then presented as your desktop wallpaper.
+Bang Wallpaper Plus downloads the latest bing® wallpaper automatically at startup. The download is then presented as your desktop wallpaper.
 
 Bang Wallpaper Plus features
 -	Impressive wallpapers from bing®
