@@ -211,24 +211,36 @@ $rheight=$srcImg.Height
 $rwidth=$srcImg.Width
 # Resize image if necessary
 $CurrentRes = (Get-WmiObject -Class Win32_VideoController).VideoModeDescription;
-if(($CurrentRes.Trim()).Contains("800 x 600")) {
+if($CurrentRes.GetType().IsArray) {
+        $CurrentRes = [String] $CurrentRes
+}
+if($CurrentRes.Contains("800 x 600")) {
 	$rheight=600
 	$rwidth=800
-} elseif(($CurrentRes.Trim()).Contains("1024 x 768")) {
+} elseif($CurrentRes.Contains("1024 x 768")) {
 	$rheight=768
 	$rwidth=1024
-} elseif(($CurrentRes.Trim()).Contains("1280 x 800")) {
+} elseif($CurrentRes.Contains("1280 x 800")) {
 	$rheight=800
 	$rwidth=1280
-} elseif(($CurrentRes.Trim()).Contains("1440 x 900")) {
+} elseif($CurrentRes.Contains("1440 x 900")) {
 	$rheight=900
 	$rwidth=1440
-} elseif(($CurrentRes.Trim()).Contains("1680 x 1050")) {
+} elseif($CurrentRes.Contains("1680 x 1050")) {
 	$rheight=1050
 	$rwidth=1680
-} elseif(($CurrentRes.Trim()).Contains("1920 x 1200")) {
+} elseif($CurrentRes.Contains("1920 x 1200")) {
 	$rheight=1200
 	$rwidth=1920
+} elseif($CurrentRes.Contains("2560 x 1440")) {
+	$rheight=1440
+	$rwidth=2560
+} elseif($CurrentRes.Contains("3840 x 2160")) {
+	$rheight=2160
+	$rwidth=3840
+} elseif($CurrentRes.Contains("7680 x 4320")) {
+	$rheight=4320
+	$rwidth=7680
 }
 
 Write-Verbose "Resize image."
@@ -279,6 +291,9 @@ if (Test-Path $heisestrFileName) {
 	if(!$ipaddress) {
 		$ipaddress = (gwmi Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null })[0].ipaddress
 	}
+    if($ipaddress.GetType().IsArray) {
+        $ipaddress = $ipaddress[0]
+    }
 	$username = $env:USERNAME
 
 	$ts = $Image.MeasureString($hostname,$Font)
