@@ -1,4 +1,4 @@
-Project Bang Wallpaper Plus
+# Project Bang Wallpaper Plus
 
 <p>Bang Wallpaper Plus downloads the latest bing® wallpaper automatically at startup. The download is then presented as your desktop wallpaper
 
