@@ -210,7 +210,7 @@ $memoryStream.Dispose()
 $rheight=$srcImg.Height
 $rwidth=$srcImg.Width
 # Resize image if necessary
-$CurrentRes = (Get-WmiObject -Class Win32_VideoController).VideoModeDescription;
+$CurrentRes = (gwmi Win32_VideoController).VideoModeDescription;
 if($CurrentRes.GetType().IsArray) {
         $CurrentRes = [String] $CurrentRes
 }

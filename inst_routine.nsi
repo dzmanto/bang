@@ -87,12 +87,14 @@ Section "" ;No components page, name is not important
   WriteUninstaller "uninstall.exe"
   
   ; Put file there
-  File bangwallpaper42.vbs
-  File rotanconv19.ps1
+  File bangwallpaper43.vbs
+  File HELP.hta
   File hostinfo
   File parrot.ico
   File README.txt
-  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
+  File rotanconv20.ps1
+  
+  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper43.vbs "" $INSTDIR\parrot.ico 0
   ; ReadRegStr $0  HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy"
   ; ${StrCase} $1 $0 "L"
   ; MessageBox MB_YESNO|MB_ICONEXCLAMATION $1
@@ -106,7 +108,7 @@ SectionEnd ; end the section
 
 Function .onInstSuccess
     MessageBox MB_YESNO "$(Message)" IDNO NoRun
-	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper42.vbs"' ; run bang
+	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper43.vbs"' ; run bang
 	Sleep 3000
     NoRun:
 FunctionEnd
@@ -115,9 +117,22 @@ Section "Uninstall"
   ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
   ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
   Delete "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk"
+  Delete $INSTDIR\bangwallpaper43.vbs
   Delete $INSTDIR\bangwallpaper42.vbs
   Delete $INSTDIR\bangwallpaper40.vbs
+  Delete $INSTDIR\bingimage.jpg
+  Delete $INSTDIR\bingimagean.bmp
+  Delete $INSTDIR\desc.txt
   Delete $INSTDIR\dumpproxy.ps1
+  Delete $INSTDIR\dumpproxy.txt
+  Delete $INSTDIR\HELP.hta
+  Delete $INSTDIR\heise
+  Delete $INSTDIR\hostinfo 
+  Delete $INSTDIR\log.txt
+  Delete $INSTDIR\parrot.ico
+  Delete $INSTDIR\pwd.txt
+  Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv20.ps1
   Delete $INSTDIR\rotanconv19.ps1
   Delete $INSTDIR\rotanconv18.ps1
   Delete $INSTDIR\rotanconv17.ps1
@@ -125,18 +140,7 @@ Section "Uninstall"
   Delete $INSTDIR\rotanconv11.ps1
   Delete $INSTDIR\rotanconv10.ps1
   Delete $INSTDIR\rotanconv7.ps1
-  Delete $INSTDIR\parrot.ico
-  Delete $INSTDIR\desc.txt
-  Delete $INSTDIR\hostinfo 
-  Delete $INSTDIR\heise
-  Delete $INSTDIR\log.txt
-  Delete $INSTDIR\dumpproxy.txt
-  Delete $INSTDIR\hostinfo
-  Delete $INSTDIR\pwd.txt
-  Delete $INSTDIR\bingimage.jpg
-  Delete $INSTDIR\bingimagean.bmp
   Delete $INSTDIR\uninstall.exe
-  Delete $INSTDIR\README.txt
   RMDir $INSTDIR
 SectionEnd
 
