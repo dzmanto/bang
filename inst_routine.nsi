@@ -8,7 +8,6 @@
 ;--------------------------------
 
 !include "MUI.nsh"
-!include "StrFunc.nsh"
 
 !define MUI_WELCOMEPAGE
 !define MUI_COMPONENTSPAGE
@@ -23,7 +22,7 @@
 !insertmacro MUI_LANGUAGE "German"
 
 LangString Message ${LANG_ENGLISH} "Installation complete. Run Bang Wallpaper Plus now?"
-LangString Message ${LANG_ENGLISH} "Installation complète. Veuillez exécuter Bang Wallpaper Plus maintenant?"
+LangString Message ${LANG_FRENCH} "Installation complète. Veuillez exécuter Bang Wallpaper Plus maintenant?"
 LangString Message ${LANG_GERMAN} "Fertig. Bang Wallpaper Plus jetzt ausführen?"
 
 Function .onInit
@@ -44,31 +43,6 @@ Icon parrot.ico
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
 
-# Declare used functions
-${StrCase}
-${StrClb}
-${StrIOToNSIS}
-${StrLoc}
-${StrNSISToIO}
-${StrRep}
-${StrStr}
-${StrStrAdv}
-${StrTok}
-${StrTrimNewLines}
-${StrSort}
-
-${UnStrCase}
-${UnStrClb}
-${UnStrIOToNSIS}
-${UnStrLoc}
-${UnStrNSISToIO}
-${UnStrRep}
-${UnStrStr}
-${UnStrStrAdv}
-${UnStrTok}
-${UnStrTrimNewLines}
-${UnStrSort}
-
 ;--------------------------------
 
 ; Pages
@@ -87,35 +61,24 @@ Section "" ;No components page, name is not important
   WriteUninstaller "uninstall.exe"
   
   ; Put file there
-  File bangwallpaper43.vbs
+  File bangwallpaper42.vbs
   File HELP.hta
   File hostinfo
   File parrot.ico
   File README.txt
-  File rotanconv20.ps1
+  File rotanconv21.ps1
   
-  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper43.vbs "" $INSTDIR\parrot.ico 0
-  ; ReadRegStr $0  HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy"
-  ; ${StrCase} $1 $0 "L"
-  ; MessageBox MB_YESNO|MB_ICONEXCLAMATION $1
-  ; StrCmp $1 "remotesigned" goahead
-  ; StrCmp $1 "unrestricted" goahead
-  ; MessageBox MB_YESNO|MB_ICONEXCLAMATION "fix registry now"
-  ; WriteRegStr HKLM "SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" "ExecutionPolicy" "Remotesigned"
-  ; goahead:
-  ; everything alright
+  CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
 SectionEnd ; end the section
 
 Function .onInstSuccess
     MessageBox MB_YESNO "$(Message)" IDNO NoRun
-	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper43.vbs"' ; run bang
+	Exec '"$SYSDIR\wscript.exe" //E:vbscript "$INSTDIR\bangwallpaper42.vbs"' ; run bang
 	Sleep 3000
     NoRun:
 FunctionEnd
 
 Section "Uninstall"
-  ; DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BigNSISTest"
-  ; DeleteRegKey HKLM "SOFTWARE\NSISTest\BigNSISTest"
   Delete "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk"
   Delete $INSTDIR\bangwallpaper43.vbs
   Delete $INSTDIR\bangwallpaper42.vbs
@@ -132,6 +95,7 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv21.ps1
   Delete $INSTDIR\rotanconv20.ps1
   Delete $INSTDIR\rotanconv19.ps1
   Delete $INSTDIR\rotanconv18.ps1
