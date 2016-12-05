@@ -61,12 +61,12 @@ Section "" ;No components page, name is not important
   WriteUninstaller "uninstall.exe"
   
   ; Put file there
+  File bang.ini
   File bangwallpaper42.vbs
   File HELP.hta
-  File hostinfo
   File parrot.ico
   File README.txt
-  File rotanconv21.ps1
+  File rotanconv22.ps1
   
   CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
 SectionEnd ; end the section
@@ -95,6 +95,7 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv22.ps1
   Delete $INSTDIR\rotanconv21.ps1
   Delete $INSTDIR\rotanconv20.ps1
   Delete $INSTDIR\rotanconv19.ps1
