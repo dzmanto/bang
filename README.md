@@ -24,3 +24,5 @@
 
 ![][bangimage]
 [bangimage]: http://download-codeplex.sec.s-msft.com/Download?ProjectName=bang&DownloadId=1436017
+
+<p>A similar solution is <a href="https://github.com/dzmanto/linux-bing-wallpaper">available</a> for linux and for Mac OSX® machines. </p>
