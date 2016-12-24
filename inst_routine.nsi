@@ -63,10 +63,12 @@ Section "" ;No components page, name is not important
   ; Put file there
   File bang.ini
   File bangwallpaper42.vbs
+  File guisttngs.ps1
   File HELP.hta
   File parrot.ico
   File README.txt
-  File rotanconv22.ps1
+  File settings.vbs
+  File rotanconv23.ps1
   
   CreateShortcut "$SMPROGRAMS\Startup\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
 SectionEnd ; end the section
@@ -88,6 +90,7 @@ Section "Uninstall"
   Delete $INSTDIR\desc.txt
   Delete $INSTDIR\dumpproxy.ps1
   Delete $INSTDIR\dumpproxy.txt
+  Delete $INSTDIR\guisttngs.ps1
   Delete $INSTDIR\HELP.hta
   Delete $INSTDIR\heise
   Delete $INSTDIR\hostinfo 
@@ -95,6 +98,7 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv23.ps1
   Delete $INSTDIR\rotanconv22.ps1
   Delete $INSTDIR\rotanconv21.ps1
   Delete $INSTDIR\rotanconv20.ps1
@@ -105,6 +109,7 @@ Section "Uninstall"
   Delete $INSTDIR\rotanconv11.ps1
   Delete $INSTDIR\rotanconv10.ps1
   Delete $INSTDIR\rotanconv7.ps1
+  Delete $INSTDIR\settings.vbs
   Delete $INSTDIR\uninstall.exe
   RMDir $INSTDIR
 SectionEnd

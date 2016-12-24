@@ -194,9 +194,12 @@ function Parse-IniFile ($file) {
 }
 
 function loadandset {
-	$ini = Parse-IniFile ".\bang.ini"
-	$hostinfo = $ini["defaults"]["hostinfo"]
-	$dwnldsrc = $ini["defaults"]["source"]
+	if (Test-Path ".\bang.ini") {
+		$ini = Parse-IniFile ".\bang.ini"
+		$hostinfo = $ini["defaults"]["hostinfo"]
+		$dwnldsrc = $ini["defaults"]["source"]
+	}
+	
 	if ($dwnldsrc -eq "heise") {
 		$contents = goget "http://www.heise.de/foto/galerie/"
 	} else {
@@ -267,7 +270,19 @@ function loadandset {
 	if($CurrentRes.GetType().IsArray) {
 		$CurrentRes = [String] $CurrentRes
 	}
-	if($CurrentRes.Contains("800 x 600")) {
+	if($CurrentRes.Contains("568 x 320")) {
+		$rwidth=568
+		$rheight=320
+	} elseif($CurrentRes.Contains("640 x 360")) {
+		$rwidth=640
+		$rheight=360
+	} elseif($CurrentRes.Contains("640 x 480")) {
+		$rwidth=640
+		$rheight=480
+	} elseif($CurrentRes.Contains("667 x 375")) {
+		$rwidth=667
+		$rheight=375
+	} elseif($CurrentRes.Contains("800 x 600")) {
 		$rwidth=800
 		$rheight=600
 	} elseif($CurrentRes.Contains("1024 x 768")) {
@@ -276,12 +291,27 @@ function loadandset {
 	} elseif($CurrentRes.Contains("1280 x 800")) {
 		$rwidth=1280
 		$rheight=800
+	} elseif($CurrentRes.Contains("1280 x 1024")) {
+		$rwidth=1280
+		$rheight=1024
+	} elseif($CurrentRes.Contains("1360 x 768")) {
+		$rwidth=1360
+		$rheight=768 
+	} elseif($CurrentRes.Contains("1366 x 768")) {
+		$rwidth=1366
+		$rheight=768
 	} elseif($CurrentRes.Contains("1440 x 900")) {
 		$rwidth=1440
+		$rheight=900
+	} elseif($CurrentRes.Contains("1600 x 900")) {
+		$rwidth=1600
 		$rheight=900
 	} elseif($CurrentRes.Contains("1680 x 1050")) {
 		$rwidth=1680
 		$rheight=1050
+	} elseif($CurrentRes.Contains("1920 x 1080")) {
+		$rwidth=1920
+		$rheight=1080
 	} elseif($CurrentRes.Contains("1920 x 1200")) {
 		$rwidth=1920
 		$rheight=1200
@@ -337,7 +367,7 @@ function loadandset {
 	$Image.DrawString($Title, $Font, $Brush, $srcImg.Width/2, $dist,$sFormat)
 	
 	# begin display host info
-	if ($hostinfo -eq "yes") {
+	if ($hostinfo -ne "no") {
 		$bmpFile.rotateflip("Rotate180FlipNone")
 		$sFormatNew=New-Object System.Drawing.Stringformat("DirectionVertical")
 		
