@@ -1,6 +1,6 @@
 Project Bang Wallpaper Plus 
 
-1. Description:
+1. Features
 Bang Wallpaper Plus downloads the latest bing wallpaper automatically at startup. The wallpaper is then displayed on your desktop.
 
 Bang Wallpaper Plus features
@@ -19,6 +19,5 @@ Download executable installer and follow instructions on the screen.
 3. Uninstallation
 Open the folder with Bang Wallpaper Plus on your computer and click uninstall.exe. Follow the instructions on the screen.
 
-4. Hostinfo
-Bang Wallpaper Plus from version 1.1 displays a box with host information such as hostname, IP, username. You may disable
-this feature by deletion of the file hostinfo from the installation directory.
+4. Settings
+Bang Wallpaper Plus from version 1.1 displays a box with host information such as hostname, IP, username. To disable this feature, click settings.vbs and follow the instructions on the screen.
