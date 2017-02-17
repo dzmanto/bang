@@ -115,8 +115,8 @@ if($hostinfo) {
 	$hostinfo = "no"
 }
 
-"[defaults]" | Out-File ".\bang.ini"
-"hostinfo=$hostinfo" | Out-File ".\bang.ini" -Append
-"source=$dwnldsrc" | Out-File ".\bang.ini" -Append
+"[defaults]" | Out-File -FilePath ".\bang.ini" -Encoding ASCII
+"hostinfo=$hostinfo" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
+"source=$dwnldsrc" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
 
 exit 0
