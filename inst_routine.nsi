@@ -77,7 +77,7 @@ Section "" ;No components page, name is not important
   File parrot.ico
   File README.txt
   File settings.vbs
-  File rotanconv23.ps1
+  File rotanconv25.ps1
    
   CreateShortcut "$SMSTARTUP\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
 SectionEnd ; end the section
@@ -118,6 +118,7 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv25.ps1
   Delete $INSTDIR\rotanconv23.ps1
   Delete $INSTDIR\rotanconv22.ps1
   Delete $INSTDIR\rotanconv21.ps1
