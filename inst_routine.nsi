@@ -65,19 +65,19 @@ RequestExecutionLevel user
 ; The stuff to install
 Section "" ;No components page, name is not important
 
-  ; Set output path to the installation directory.
-  SetOutPath $INSTDIR
-  WriteUninstaller "uninstall.exe"
-  
-  ; Put file there
-  File bang.ini
-  File bangwallpaper42.vbs
-  File guisttngs.ps1
-  File HELP.hta
-  File parrot.ico
-  File README.txt
-  File settings.vbs
-  File rotanconv25.ps1
+; Set output path to the installation directory.
+SetOutPath $INSTDIR
+WriteUninstaller "uninstall.exe"
+
+; Put file there
+File bang.ini
+File bangwallpaper42.vbs
+File guisttngs.ps1
+File HELP.hta
+File parrot.ico
+File README.txt
+File settings.vbs
+File rotanconv25.ps1
    
   CreateShortcut "$SMSTARTUP\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
 SectionEnd ; end the section
@@ -132,7 +132,7 @@ Section "Uninstall"
   Delete $INSTDIR\rotanconv7.ps1
   Delete $INSTDIR\settings.vbs
   Delete $INSTDIR\uninstall.exe
-  RMDir $INSTDIR
+  RMDir /REBOOTOK $INSTDIR
   
   !insertmacro MUI_STARTMENU_GETFOLDER 0 $SMDir
   
