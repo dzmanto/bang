@@ -32,6 +32,8 @@ if (Test-Path ".\bang.ini") {
 	$dwnldsrc = $ini["defaults"]["source"]
 }
 
+$global:cncl=$false;
+
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") 
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
 $objForm = New-Object System.Windows.Forms.Form
@@ -92,7 +94,10 @@ $CancelButton.Size = New-Object System.Drawing.Size(75,23)
 $CancelButton.Text = "Cancel"
 $CancelButton.Name = "Cancel"
 $CancelButton.DialogResult = "Cancel"
-$CancelButton.Add_Click({$objForm.Close(); $cancel = $true})
+$CancelButton.Add_Click({
+    $global:cncl = $true
+    $objForm.Close()
+})
 $objForm.Controls.Add($CancelButton) 
 
 if (Test-Path ".\parrot.ico") {
@@ -101,22 +106,25 @@ if (Test-Path ".\parrot.ico") {
 
 $objForm.Add_Shown({$objForm.Activate()})
 [void] $objForm.ShowDialog()
-if ($cancel) {return}
 
-if($objCombobox.SelectedIndex -eq 0) {
-	$dwnldsrc = "bing"
+if ($global:cncl) {
+    exit 0
 } else {
-	$dwnldsrc = "heise"
+    if($objCombobox.SelectedIndex -eq 0) {
+	    $dwnldsrc = "bing"
+    } else {
+	    $dwnldsrc = "heise"
+    }
+
+    if($objcheckBox.Checked) {
+	    $hostinfo = "yes"
+    } else {
+	    $hostinfo = "no"
+    }
+
+    "[defaults]" | Out-File -FilePath ".\bang.ini" -Encoding ASCII
+    "hostinfo=$hostinfo" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
+    "source=$dwnldsrc" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
+
+    exit 0
 }
-
-if($objcheckBox.Checked) {
-	$hostinfo = "yes"
-} else {
-	$hostinfo = "no"
-}
-
-"[defaults]" | Out-File -FilePath ".\bang.ini" -Encoding ASCII
-"hostinfo=$hostinfo" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
-"source=$dwnldsrc" | Out-File -FilePath ".\bang.ini" -Encoding ASCII -Append
-
-exit 0
