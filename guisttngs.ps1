@@ -80,9 +80,9 @@ $OKButton.Name = "OK"
 $OKButton.DialogResult = "OK"
 $OKButton.Add_Click(
 {
-$hostinfo = $objcheckBox.Checked
-$dwnldsrc = $objCombobox.SelectedIndex
-$objForm.Close()
+    $hostinfo = $objcheckBox.Checked
+    $dwnldsrc = $objCombobox.SelectedIndex
+    $objForm.Close()
 })
 $objForm.Controls.Add($OKButton) 
 
@@ -103,13 +103,13 @@ $objForm.Add_Shown({$objForm.Activate()})
 [void] $objForm.ShowDialog()
 if ($cancel) {return}
 
-if($dwnldsrc -eq 0) {
+if($objCombobox.SelectedIndex -eq 0) {
 	$dwnldsrc = "bing"
 } else {
 	$dwnldsrc = "heise"
 }
 
-if($hostinfo) {
+if($objcheckBox.Checked) {
 	$hostinfo = "yes"
 } else {
 	$hostinfo = "no"
