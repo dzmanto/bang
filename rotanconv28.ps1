@@ -58,7 +58,11 @@ function goget {
 		if($isdata.contains("yes")) {
 			[BYTE[]] $contents = $wc.DownloadData($strurl)
 		} else {
-			$contents = $wc.DownloadString($strurl)
+			try {
+				$contents = $wc.DownloadString($strurl)
+			} catch [Exception] {
+				Write-Verbose "There appears to be no internet connection."
+			}
 		}
 		# a network connection may not be available yet. Sleep for 7 seconds.
 		if($contents.length -eq 0) {
@@ -191,6 +195,59 @@ function Parse-IniFile ($file) {
     }
   }
   $ini
+}
+
+function initbang {
+	# stretch and refresh at startup
+	$path = [IO.Path]::GetFullPath("bingimagean.bmp")
+	$registryPath = "HKCU:\Control Panel\Desktop"
+	if((Test-Path $path) -and (Test-Path $registryPath)) {
+		
+		Write-Verbose "Load System.Drawing on init."
+		[Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
+		[Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") | Out-Null
+		$srcImg = [System.Drawing.Bitmap][System.Drawing.Image]::FromFile($path)
+		
+		# Resize image if necessary
+		$CurrentRes = (gwmi Win32_VideoController).VideoModeDescription;
+		if($CurrentRes.GetType().IsArray) {
+			$CurrentRes = [String] $CurrentResf
+		}
+		$CurrentRes_split = $CurrentRes.Split("x")
+		$rwidth=$CurrentRes_split[0]
+		$rwidth=$rwidth.trim()
+		$rheight=$CurrentRes_split[1]
+		$rheight=$rheight.trim()
+		
+		Write-Verbose "Resize image on init."
+		$srcOutImg = resizeimg $rwidth $rheight $srcImg
+		if($srcImg.Wdith -ne $srcOutImg.Wdith -or $srcImg.Height -ne $srcOutImg.Height) { 
+			$srcImg.Dispose()
+			Write-Verbose "Create a bitmap object on init."
+			$bmpFile = New-Object System.Drawing.Bitmap(([int]($srcOutImg.width)),([int]($srcOutImg.height)))
+			Write-Verbose "Intialize graphics object on init."
+			$Image = [System.Drawing.Graphics]::FromImage($bmpFile)
+			$Image.SmoothingMode = "AntiAlias"
+			$Rectangle = New-Object Drawing.Rectangle 0, 0, $srcOutImg.Width, $srcOutImg.Height
+			$Image.DrawImage($srcOutImg, $Rectangle, 0, 0, $srcOutImg.Width, $srcOutImg.Height, ([Drawing.GraphicsUnit]::Pixel))
+			$bmpFile.save($path, [System.Drawing.Imaging.ImageFormat]::Bmp)
+			$bmpFile.Dispose()
+		}
+		$srcImg.Dispose()
+		$srcOutImg.Dispose()
+		
+		Write-Verbose "stretch and refresh"
+		$nm = "WallpaperStyle"
+		$value = "0"
+		New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType STRING -Force | Out-Null
+		$nm = "TileWallpaper"
+		$value = "0"
+		New-ItemProperty -Path $registryPath -Name $nm -Value $value -PropertyType STRING -Force | Out-Null
+		
+		Write-Verbose "Refresh explorer."
+		[Wallpaper.Setter]::SetWallpaper($path)		
+		Write-Verbose "Done with stretch and refresh"
+	}
 }
 
 function loadandset {
@@ -398,6 +455,7 @@ function loadandset {
 	[Wallpaper.Setter]::SetWallpaper($path)
 }
 
+initbang
 loadandset
 $time_last_run = Get-Date
 Do {
