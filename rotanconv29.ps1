@@ -284,6 +284,7 @@ function loadandset {
 		$imgurl = $contents.substring($b+12,$c+4)
 		$imgurl = "http://www.bing.com" + $imgurl
 		$imgurl = procstr $imgurl
+		$imgurl = $imgurl -replace "http://www.bing.com//www.bing.com/" , "http://www.bing.com/"
 	}
 	
 	Write-Verbose "Download image."
