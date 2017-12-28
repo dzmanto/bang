@@ -1,9 +1,4 @@
-; example1.nsi
-;
-; This script is perhaps one of the simplest NSIs you can make. All of the
-; optional settings are left to their default settings. The installer simply 
-; prompts the user asking them where to install, and drops a copy of example1.nsi
-; there. 
+SetCompressor /SOLID /FINAL lzma
 
 ;--------------------------------
 
@@ -76,7 +71,7 @@ File guisttngs.ps1
 File HELP.hta
 File parrot.ico
 File README.txt
-File rotanconv28.ps1
+File rotanconv30.ps1
 File settings.vbs
    
   CreateShortcut "$SMSTARTUP\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
@@ -101,6 +96,10 @@ Function .onInstSuccess
 FunctionEnd
 
 Section "Uninstall"
+  
+  nsExec::ExecToLog /OEM 'powershell -command "& {&gwmi win32_process | Where-Object {$$_.CommandLine -like \"*guisttngs.ps1*\"} } | % { \"$$(Stop-Process $$_.ProcessID)\" }"'
+  nsExec::ExecToLog /OEM 'powershell -command "& {&gwmi win32_process | Where-Object {$$_.CommandLine -like \"*rotanconv*\"} } | % { \"$$(Stop-Process $$_.ProcessID)\" }"'
+  
   Delete $INSTDIR\bangwallpaper43.vbs
   Delete $INSTDIR\bangwallpaper42.vbs
   Delete $INSTDIR\bangwallpaper40.vbs
@@ -118,6 +117,8 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+  Delete $INSTDIR\rotanconv30.ps1
+  Delete $INSTDIR\rotanconv29.ps1
   Delete $INSTDIR\rotanconv28.ps1
   Delete $INSTDIR\rotanconv26.ps1
   Delete $INSTDIR\rotanconv25.ps1

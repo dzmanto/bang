@@ -118,6 +118,8 @@ function procstr {
 		[Parameter(Mandatory=$True,Position=1)]
 		[string]$strtoproc 
 	)
+	$strtoproc = $strtoproc -replace ";" , ""
+	$strtoproc = $strtoproc -replace "|" , ""
 	$strtoproc = $strtoproc -replace """" , ""
 	$strtoproc = $strtoproc -replace "\\/" , "/"
 	$strtoproc = $strtoproc -replace "'", ""
@@ -140,6 +142,7 @@ function proctitle {
 	$strtoproc = $strtoproc -replace "&ndash;" , "–"
 	$strtoproc = $strtoproc -replace "&mdash;" , "—"
 	$strtoproc = $strtoproc -replace "&permil;" , "‰"
+	$strtoproc = $strtoproc -replace "|" , ""
 	$strtoproc = $strtoproc.trim()
 	return $strtoproc
 }
@@ -211,7 +214,7 @@ function initbang {
 		# Resize image if necessary
 		$CurrentRes = (gwmi Win32_VideoController).VideoModeDescription;
 		if($CurrentRes.GetType().IsArray) {
-			$CurrentRes = [String] $CurrentResf
+			$CurrentRes = [String] $CurrentRes
 		}
 		$CurrentRes_split = $CurrentRes.Split("x")
 		$rwidth=$CurrentRes_split[0]
