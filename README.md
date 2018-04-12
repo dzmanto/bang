@@ -22,6 +22,6 @@
 
 <p>Bang Wallpaper Plus features wallpaper annotation. People may look at your desktop wallpaper and ask questions such as “what fish is that?”. To answer such questions, a brief description and copyright information are displayed on the right hand side of the wallpaper. The description and the copyright information are the same as on <a href="http://www.bing.com">www.bing.com</a>. </p>
 
-![bangimage](http://download-codeplex.sec.s-msft.com/Download?ProjectName=bang&DownloadId=1436017)
+![](bingimagean_codeplex.jpg)
 
 <p>A similar solution is <a href="https://github.com/dzmanto/linux-bing-wallpaper">available</a> for linux and for Mac OSX® machines. </p>
