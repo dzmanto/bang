@@ -20,5 +20,4 @@ Download executable installer and follow instructions on the screen.
 Open the folder with Bang Wallpaper Plus on your computer and click uninstall.exe. Follow the instructions on the screen.
 
 4. Settings
-Bang Wallpaper Plus from version 1.1 displays a box with host information such as hostname, IP, username. You may disable
-this feature by deletion of the file hostinfo from the installation directory.
+Bang Wallpaper Plus from version 1.1 displays a box with host information such as hostname, IP, username. To disable this feature, click settings.vbs and follow the instructions on the screen.
