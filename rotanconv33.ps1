@@ -15,10 +15,8 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
-namespace Wallpaper
-{
-   public enum Style : int
-   {
+namespace Wallpaper {
+   public enum Style : int {
        Tile, Center, Stretch, NoChange
    }
    public class Setter {
@@ -142,6 +140,7 @@ function proctitle {
 	$strtoproc = $strtoproc -replace "&ndash;" , "–"
 	$strtoproc = $strtoproc -replace "&mdash;" , "—"
 	$strtoproc = $strtoproc -replace "&permil;" , "‰"
+	$strtoproc = $strtoproc -replace "\\u0027" , [char]39
 	$strtoproc = $strtoproc -replace "|" , ""
 	$strtoproc = $strtoproc.trim()
 	return $strtoproc
@@ -212,7 +211,7 @@ function initbang {
 		$srcImg = [System.Drawing.Bitmap][System.Drawing.Image]::FromFile($path)
 		
 		# Resize image if necessary
-		$CurrentRes = (gwmi Win32_VideoController).VideoModeDescription;
+		$CurrentRes = (Get-CimInstance Win32_VideoController).VideoModeDescription
 		if($CurrentRes.GetType().IsArray) {
 			$CurrentRes = [String] $CurrentRes
 		}
@@ -283,14 +282,19 @@ function loadandset {
 		$imgurl = procstr $imgurl
 	} else {
 		$b = $contents.indexof("g_img={url:")
-		$c = $contents.substring($b+12).indexof(".jpg")
-		$imgurl = $contents.substring($b+12,$c+4)
+		$url__offset=12
+		if($b -lt 0) {
+			$b=$contents.indexof("Image"":{""Url"":")
+			$url_offset=14
+		}
+		$c = $contents.substring($b+$url_offset).indexof(".jpg")
+		$imgurl = $contents.substring($b+$url_offset,$c+4)
 		$imgurl = "http://www.bing.com" + $imgurl
 		$imgurl = procstr $imgurl
 		$imgurl = $imgurl -replace "http://www.bing.com//www.bing.com/" , "http://www.bing.com/"
 	}
 	
-	Write-Verbose "Download image."
+	Write-Verbose "Download image from $imgurl"
 	try {
 		[BYTE[]] $imgarray = goget $imgurl "yes"
 	} catch [Exception] {
@@ -313,6 +317,9 @@ function loadandset {
 		$Title = getttl $contents "={""copyright"":"""
 	} else {
 		$Title = getttl $contents "alt="""
+		if($Title.ToLower().substring(0,6) -eq "profil" -or $Title.ToLower().substring(0,14) -eq "bild des tages") {
+			$Title = getttl $contents """Title"":"""
+		}
 	}
 	$Title = proctitle $Title
 	
@@ -327,7 +334,7 @@ function loadandset {
 	$rheight=$srcImg.Height
 	$rwidth=$srcImg.Width
 	# Resize image if necessary
-	$CurrentRes = (gwmi Win32_VideoController).VideoModeDescription;
+	$CurrentRes = (Get-CimInstance Win32_VideoController).VideoModeDescription;
 	if($CurrentRes.GetType().IsArray) {
 		$CurrentRes = [String] $CurrentRes
 	}
@@ -380,13 +387,13 @@ function loadandset {
 		$sFormatNew=New-Object System.Drawing.Stringformat("DirectionVertical")
 		
 		$hostname = $env:COMPUTERNAME
-		$ipaddress = (gwmi Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null }).ipaddress
+		$ipaddress = (Get-CimInstance Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null }).ipaddress
 		if(!$ipaddress) {
-			$ipaddress = (gwmi Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null })[0].ipaddress
+			$ipaddress = (Get-CimInstance Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null })[0].ipaddress
 		}
-	    if($ipaddress.GetType().IsArray) {
-		$ipaddress = $ipaddress[0]
-	    }
+		if($ipaddress.GetType().IsArray) {
+			$ipaddress = $ipaddress[0]
+		}
 		$username = $env:USERNAME
 	
 		$ts = $Image.MeasureString($hostname,$Font)
