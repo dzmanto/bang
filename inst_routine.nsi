@@ -71,7 +71,11 @@ File guisttngs.ps1
 File HELP.hta
 File parrot.ico
 File README.txt
+<<<<<<< HEAD
 File rotanconv36.ps1
+=======
+File rotanconv34.ps1
+>>>>>>> a9ab5839e7ebc1400bdf81aafaa63ca57cb5d7ab
 File settings.vbs
    
   CreateShortcut "$SMSTARTUP\Bang Wallpaper Plus.lnk" $INSTDIR\bangwallpaper42.vbs "" $INSTDIR\parrot.ico 0
@@ -117,7 +121,10 @@ Section "Uninstall"
   Delete $INSTDIR\parrot.ico
   Delete $INSTDIR\pwd.txt
   Delete $INSTDIR\README.txt
+<<<<<<< HEAD
   Delete $INSTDIR\rotanconv35.ps1
+=======
+>>>>>>> a9ab5839e7ebc1400bdf81aafaa63ca57cb5d7ab
   Delete $INSTDIR\rotanconv34.ps1
   Delete $INSTDIR\rotanconv33.ps1
   Delete $INSTDIR\rotanconv32.ps1
