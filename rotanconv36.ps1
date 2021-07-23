@@ -391,19 +391,11 @@ function loadandset {
 		if(!$ipaddress) {
 			$ipaddress = (Get-CimInstance Win32_NetworkAdapterConfiguration | ? { $_.IPAddress -ne $null })[0].ipaddress 4> $null
 		}
-<<<<<<< HEAD:rotanconv36.ps1
-=======
-		
->>>>>>> a9ab5839e7ebc1400bdf81aafaa63ca57cb5d7ab:rotanconv35.ps1
 		if(-not ($ipaddress.GetType().IsArray)) {
 			$addresses=[Object[]]::new(1)
 			$addresses[0]=$ipaddress
 			$ipaddress = $addresses
 		}
-<<<<<<< HEAD:rotanconv36.ps1
-=======
-		
->>>>>>> a9ab5839e7ebc1400bdf81aafaa63ca57cb5d7ab:rotanconv35.ps1
 		$ipaddress=$ipaddress | sort-object
 		$username = $env:USERNAME
 	
@@ -446,15 +438,10 @@ function loadandset {
 		# draw strings
 		$Brush = new-Object Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 255, 255, 255))
 		$Image.DrawString($hostname, $Font, $Brush, $voffset, $hoffset, $sFormatNew)
-<<<<<<< HEAD:rotanconv36.ps1
 		$i=0
 		foreach($addr in $ipaddress) {
 			$Image.DrawString($addr, $Font, $Brush, $ivoffset[$i], $hoffset, $sFormatNew)
 			$i = $i + 1
-=======
-		for($i=0; $i -lt $ipaddress.count;$i++) {
-			$Image.DrawString($ipaddress[$i], $Font, $Brush, $ivoffset[$i], $hoffset, $sFormatNew)
->>>>>>> a9ab5839e7ebc1400bdf81aafaa63ca57cb5d7ab:rotanconv35.ps1
 		}
 		$Image.DrawString($username, $Font, $Brush, $uvoffset, $hoffset, $sFormatNew)
 		$bmpFile.rotateflip("Rotate270FlipNone")
